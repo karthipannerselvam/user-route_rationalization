@@ -25,3 +25,4 @@ dist-ssr
 
 # Ignore final.csv
 final.csv
+output.csv

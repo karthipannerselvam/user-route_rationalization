@@ -4,16 +4,6 @@
       <h1>Select Your Route</h1>
       <form @submit.prevent="handleSubmit">
         <div>
-          <label for="route-id">Route ID:</label>
-          <select id="route-id" v-model="selectedRouteId" @change="handleRouteChange">
-            <option value="" disabled>Select a route ID</option>
-            <option v-for="route in routes" :key="route.route_id" :value="route.route_id">
-              {{ route.route_id }}
-            </option>
-          </select>
-        </div>
-
-        <div>
           <label for="source">Source:</label>
           <select id="source" v-model="selectedSource" @change="handleSearch">
             <option value="" disabled>Select a source</option>
@@ -38,10 +28,11 @@
     </div>
 
     <div v-if="selectedSchedule.length > 0" class="schedule-container">
-      <h2>Bus Schedule</h2>
+      <h2>Matching Buses</h2>
       <table>
         <thead>
           <tr>
+            <th>Bus Id</th>
             <th>Stop Sequence</th>
             <th>Stop Name</th>
             <th>Arrival Time</th>
@@ -49,6 +40,7 @@
         </thead>
         <tbody>
           <tr v-for="(stop, index) in selectedSchedule" :key="index">
+            <td>{{ stop.bus_id }}</td>
             <td>{{ stop.stop_sequence }}</td>
             <td>{{ stop.stop_name }}</td>
             <td>{{ stop.arrival_time }}</td>
@@ -67,7 +59,6 @@ export default {
   data() {
     return {
       routes: [],
-      selectedRouteId: "",
       selectedSource: "",
       selectedDestination: "",
       sourceOptions: [],
@@ -77,96 +68,71 @@ export default {
   },
   methods: {
     fetchRoutes() {
-      const csvUrl = "/final.csv";
-      console.log("Fetching CSV data from:", csvUrl);
+      const csvUrl = "/output.csv";
 
       Papa.parse(csvUrl, {
         download: true,
         header: true,
         complete: (results) => {
-          console.log("Parsing complete:", results.data);
           const data = results.data.filter((row) => row.route_id);
 
-          // Process data to extract source and destination
+          // Process data to group by route_id
           const groupedRoutes = data.reduce((acc, row) => {
             if (!acc[row.route_id]) {
               acc[row.route_id] = { route_id: row.route_id, stops: [] };
             }
-
-            // Check if the stop is already in the array
-            if (!acc[row.route_id].stops.some((stop) => stop.stop_name === row.stop_name)) {
-              acc[row.route_id].stops.push({
-                stop_sequence: parseInt(row.stop_sequence),
-                stop_name: row.stop_name,
-                arrival_time: row.arrival_time,
-              });
-            }
-
+            acc[row.route_id].stops.push({
+              stop_sequence: parseInt(row.stop_sequence),
+              stop_name: row.stop_name,
+              arrival_time: row.arrival_time,
+              bus_id: row.bus_name,
+            });
             return acc;
           }, {});
 
-          // Map the grouped routes to include source and destination
+          // Map routes and sort stops by sequence
           this.routes = Object.values(groupedRoutes).map((route) => {
             const sortedStops = route.stops.sort(
               (a, b) => a.stop_sequence - b.stop_sequence
             );
             return {
               route_id: route.route_id,
-              source: sortedStops[0].stop_name,
-              destination: sortedStops[sortedStops.length - 1].stop_name,
               schedule: sortedStops,
               stops: sortedStops.map((stop) => stop.stop_name),
             };
           });
 
-          // Populate the source and destination options
-          this.sourceOptions = [...new Set(this.routes.map((route) => route.source))];
-          this.destinationOptions = [...new Set(this.routes.map((route) => route.destination))];
+          // Populate source and destination options
+          const allStops = data.map((row) => row.stop_name);
+          this.sourceOptions = [...new Set(allStops)];
+          this.destinationOptions = [...new Set(allStops)];
         },
       });
     },
 
-    handleRouteChange() {
-      console.log(`Selected Route ID: ${this.selectedRouteId}`);
-      const selectedRoute = this.routes.find(
-        (route) => route.route_id === this.selectedRouteId
-      );
-
-      if (selectedRoute) {
-        this.selectedSource = selectedRoute.source;
-        this.selectedDestination = selectedRoute.destination;
-        this.selectedSchedule = selectedRoute.schedule;
-      }
-    },
-
     handleSearch() {
-      console.log(
-        "Searching for route with source:",
-        this.selectedSource,
-        "and destination:",
-        this.selectedDestination
-      );
-
-      const matchingRoutes = this.routes.filter(
-        (route) =>
-          route.source.toLowerCase().includes(this.selectedSource.toLowerCase()) &&
-          route.destination.toLowerCase().includes(this.selectedDestination.toLowerCase())
-      );
-
-      if (matchingRoutes.length === 1) {
-        const selectedRoute = matchingRoutes[0];
-        this.selectedRouteId = selectedRoute.route_id;
-        this.selectedSource = selectedRoute.source;
-        this.selectedDestination = selectedRoute.destination;
-        this.selectedSchedule = selectedRoute.schedule;
-      } else {
+      if (!this.selectedSource || !this.selectedDestination) {
         this.selectedSchedule = [];
+        return;
       }
+
+      const matchingRoutes = this.routes.filter((route) => {
+        const sourceIndex = route.stops.indexOf(this.selectedSource);
+        const destinationIndex = route.stops.indexOf(this.selectedDestination);
+        return sourceIndex !== -1 && destinationIndex !== -1 && sourceIndex < destinationIndex;
+      });
+
+      // Flatten schedule for matching buses
+      this.selectedSchedule = matchingRoutes.flatMap((route) =>
+        route.schedule.filter((stop) =>
+          stop.stop_name === this.selectedSource || stop.stop_name === this.selectedDestination
+        )
+      );
     },
 
     handleSubmit() {
       alert(
-        `Selected Route ID: ${this.selectedRouteId}\nSource: ${this.selectedSource}\nDestination: ${this.selectedDestination}`
+        `Source: ${this.selectedSource}\nDestination: ${this.selectedDestination}\nMatching Buses: ${this.selectedSchedule.length}`
       );
     },
   },
@@ -176,6 +142,7 @@ export default {
   },
 };
 </script>
+
   
   <style scoped> 
   .route-form {
