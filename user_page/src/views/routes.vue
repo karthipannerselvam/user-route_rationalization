@@ -103,6 +103,13 @@ export default {
         this.map.removeLayer(this.polyline);
       }
 
+      const customIcon = L.icon({
+        iconUrl: "/assets/ICON.png", // Path to your PNG file
+        iconSize: [32, 32], // Size of the icon [width, height]
+        iconAnchor: [16, 32], // Point of the icon that corresponds to marker's location
+        popupAnchor: [0, -32], // Point from which the popup should open relative to the iconAnchor
+      });
+
       // Plot markers for stops
       const coordinates = [];
       this.stops.forEach((stop) => {
