@@ -33,7 +33,7 @@ export default {
         { text: "ABOUT US", route: "/aboutus" },
         { text: "FARE LIST", route: "/fare-list" },
         { text: "CONCESSION FARES", route: "/concession-fares" },
-        { text: "SEARCH", route: "/search" },
+        { text: "SEARCH", route: "/routes" },
         { text: "CONTACT US", route: "/contact-us" },
         { text: "OTHERS", route: "/others" },
       ],
@@ -80,10 +80,11 @@ export default {
   }
   
   .topbar-title {
-    font-size: 20px;
+    font-size: 1px;
     font-weight: bold;
     color: #212529;
     margin: 0;
+    margin-right:5px;
   }
   
   .menu-container {
@@ -115,7 +116,7 @@ export default {
     width: 30px;
     height: 20px;
     cursor: pointer;
-    margin-right: 20px;
+    margin-right: 17px;
   }
   
   .hamburger .line {
