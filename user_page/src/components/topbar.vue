@@ -116,6 +116,7 @@
     width: 30px;
     height: 20px;
     cursor: pointer;
+    margin-right: 20px;
   }
   
   .hamburger .line {
