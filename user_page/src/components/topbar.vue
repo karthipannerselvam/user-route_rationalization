@@ -13,7 +13,7 @@
         <a href="#" class="menu-link">ABOUT US</a>
         <a href="#" class="menu-link">FARE LIST</a>
         <a href="#" class="menu-link">CONCESSION FARES</a>
-        <a href="#" class="menu-link">SEARCH</a>
+        <router-link to="/routes" class="menu-link">SEARCH</router-link>
         <a href="#" class="menu-link">CONTACT US</a>
         <a href="#" class="menu-link">OTHERS</a>
       </div>
