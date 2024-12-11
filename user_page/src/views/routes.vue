@@ -1,5 +1,6 @@
 <template>
   <div>
+    <topbar />
     <h1>Bus Stops Finder</h1>
 
     <!-- Input for Route ID -->
@@ -37,8 +38,14 @@
 import axios from "axios";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import topbar from "../components/topbar.vue";
 
 export default {
+  components: {
+     
+     topbar
+    
+   },
   data() {
     return {
       routeId: null, // Input for route ID
@@ -130,36 +137,155 @@ export default {
 </script>
 
 <style>
-.map-container {
-  width: 100%;
-  height: 500px;
-  margin: 20px 0;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-.error {
-  color: red;
+h1, h2, h3 {
+  color: #333;
+  text-align: center;
+}
+
+/* Container */
+div {
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Input and Button Styles */
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+  color: #555;
+}
+
+input[type="number"] {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+input[type="number"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+}
+
+button {
+  background-color: #007BFF;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   margin-top: 10px;
 }
 
-.stops-list {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  color: #333;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
+
+/* Loading Indicator */
+.loading {
+  text-align: center;
+  font-size: 18px;
+  color: #666;
+  margin: 20px 0;
+}
+
+/* Error Message */
+.error {
+  text-align: center;
+  color: #d9534f;
+  font-weight: bold;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #f2dede;
+  border: 1px solid #ebccd1;
+  border-radius: 8px;
+}
+
+/* Map Container */
+.map-container {
+  width: 100%;
+  max-width: 1000px;
+  height: 500px;
+  margin: 20px auto;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Stops List */
+.stops-list {
+  margin: 20px auto;
+  padding: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+.stops-list h3 {
+  text-align: center;
+  color: #007BFF;
+  margin-bottom: 10px;
+}
+
 .stops-list ul {
-  list-style-type: none;
+  list-style: none;
+  margin: 0;
   padding: 0;
 }
+
 .stops-list li {
-  padding: 5px 0;
+  padding: 10px;
+  margin: 5px 0;
   border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.3s ease;
 }
+
 .stops-list li:last-child {
   border-bottom: none;
 }
+
+.stops-list li:hover {
+  background-color: #f8f9fa;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  input[type="number"], button {
+    width: 100%;
+  }
+
+  .map-container {
+    height: 400px;
+  }
+
+  .stops-list {
+    max-width: 100%;
+  }
+}
+
 </style>
