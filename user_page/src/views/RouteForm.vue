@@ -191,109 +191,87 @@ export default {
   },
 };
 </script>
-
 <style scoped>
+/* General adjustments for better responsiveness */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
 
 .route-form {
-  max-width: 600px;
-  margin: 2rem auto;
-  padding: 2rem;
+  max-width: 90%; /* Reduce width for mobile */
+  margin: 1rem auto;
+  padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
 }
 
 .route-form h1 {
   text-align: center;
   color: #333;
-  font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem; /* Reduce font size for smaller screens */
+  margin-bottom: 1rem;
 }
 
 .route-form select {
   width: 100%;
-  padding: 0.8rem;
+  padding: 0.7rem; /* Slightly smaller padding */
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 1rem;
-  margin-bottom: 1.2rem;
-}
-
-.route-form select:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
-  outline: none;
+  font-size: 0.9rem; /* Adjust font size */
+  margin-bottom: 1rem;
 }
 
 .route-form button {
   display: block;
   width: 100%;
-  padding: 0.9rem;
+  padding: 0.8rem; /* Adjust padding for mobile */
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Adjust font size */
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
 
-.route-form button:hover {
-  background-color: #0056b3;
-  transform: scale(1.02);
-}
-
-.route-form button:active {
-  background-color: #004085;
-  transform: scale(0.98);
-}
-
 .schedule-container {
   color: #333;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
 }
 
-.schedule-container h2 {
-  font-size: 1.6rem;
-  color: #333;
-  margin-bottom: 1rem;
-}
-
 .bus-grid {
   display: flex;
-  overflow-x: auto;
-  overflow-y: hidden; /* Prevent vertical scrolling */
-  -ms-overflow-style: none; /* Internet Explorer/Edge scrollbar style */
+  flex-wrap: wrap; /* Allow wrapping for better mobile layout */
   gap: 1rem;
-}
-::-webkit-scrollbar {
-  display: none; /* Hide scrollbar */
+  justify-content: center;
 }
 
 .bus-container {
-  flex: 0 0 auto;
+  flex: 1 1 calc(100% - 2rem); /* Make containers full-width on mobile */
+  max-width: 100%;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 1rem;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 300px;
 }
 
 .schedule-container table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 0.9rem; /* Reduce font size for better fit */
 }
 
 .schedule-container th,
 .schedule-container td {
-  padding: 0.8rem;
+  padding: 0.6rem; /* Adjust padding for smaller screens */
   border: 1px solid #ddd;
   text-align: left;
 }
@@ -310,6 +288,7 @@ export default {
   background-color: #e9e9e9;
 }
 
+/* Highlight adjustments */
 .highlight-source {
   background-color: #d1e7dd; /* Light green */
   font-weight: bold;
@@ -322,17 +301,26 @@ export default {
   color: #842029;
 }
 
+/* Media Query for very small devices */
 @media (max-width: 480px) {
   .route-form {
-    padding: 1.5rem;
+    padding: 1rem;
   }
 
   .route-form h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
   }
 
   .route-form button {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .bus-container {
+    flex: 1 1 100%;
+  }
+
+  .schedule-container table {
+    font-size: 0.8rem;
   }
 }
 </style>

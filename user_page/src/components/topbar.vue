@@ -1,54 +1,53 @@
 <template>
-    <div class="topbar">
-      <div class="logo-container">
-        <img src="../assets/dlc.logo.png" alt="DTC Logo" class="topbar-logo" />
-        <h1 class="topbar-title">Delhi Transport Corporation</h1>
-      </div>
-      <div class="hamburger" @click="toggleMenu">
-        <div class="line"></div>
-        <div class="line"></div>
-        <div class="line"></div>
-      </div>
-      <div :class="['menu-container', { show: isMenuOpen }]">
-        <a href="#" class="menu-link">ABOUT US</a>
-        <a href="#" class="menu-link">FARE LIST</a>
-        <a href="#" class="menu-link">CONCESSION FARES</a>
-        <a href="#" class="menu-link">SEARCH</a>
-        <a href="#" class="menu-link">CONTACT US</a>
-        <a href="#" class="menu-link">OTHERS</a>
-      </div>
+  <div class="topbar">
+    <div class="logo-container">
+      <img src="../assets/dlc.logo.png" alt="DTC Logo" class="topbar-logo" />
+      <h1 class="topbar-title">Delhi Transport Corporation</h1>
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: "TopBar",
-    data() {
-      return {
-        isMenuOpen: false, // Tracks the menu's open/close state
-      };
+    <div class="hamburger" @click="toggleMenu">
+      <div class="line"></div>
+      <div class="line"></div>
+      <div class="line"></div>
+    </div>
+    <div :class="['menu-container', { show: isMenuOpen }]">
+      <a
+        v-for="item in menuItems"
+        :key="item.text"
+        class="menu-link"
+        @click.stop="$router.push(item.route)"
+        href="#"
+      >
+        {{ item.text }}
+      </a>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "TopBar",
+  data() {
+    return {
+      isMenuOpen: false,
+      menuItems: [
+        { text: "ABOUT US", route: "/aboutus" },
+        { text: "FARE LIST", route: "/fare-list" },
+        { text: "CONCESSION FARES", route: "/concession-fares" },
+        { text: "SEARCH", route: "/search" },
+        { text: "CONTACT US", route: "/contact-us" },
+        { text: "OTHERS", route: "/others" },
+      ],
+    };
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
     },
-    methods: {
-      toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen; // Toggle menu visibility
-      },
-      handleResize() {
-        // Close the menu if returning to desktop view
-        if (window.innerWidth > 768) {
-          this.isMenuOpen = false;
-        }
-      },
-    },
-    mounted() {
-      // Add a resize event listener
-      window.addEventListener("resize", this.handleResize);
-    },
-    beforeUnmount() {
-      // Remove the resize event listener
-      window.removeEventListener("resize", this.handleResize);
-    },
-  };
-  </script>
+  },
+};
+</script>
+
+
   
   
   <style scoped>
