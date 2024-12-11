@@ -113,7 +113,7 @@ export default {
       // Plot markers for stops
       const coordinates = [];
       this.stops.forEach((stop) => {
-        const marker = L.marker([stop.stop_lat, stop.stop_lon]).addTo(this.map);
+        const marker = L.marker([stop.stop_lat, stop.stop_lon], { icon: customIcon }).addTo(this.map);
         marker.bindPopup(`<strong>${stop.stop_name}</strong><br>ID: ${stop.stop_id}`);
         this.markers.push(marker);
         coordinates.push([stop.stop_lat, stop.stop_lon]);
