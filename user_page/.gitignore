@@ -24,5 +24,4 @@ dist-ssr
 *.sw?
 
 # Ignore final.csv
-final.csv
 output.csv
