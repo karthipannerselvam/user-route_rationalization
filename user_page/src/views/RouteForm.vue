@@ -27,11 +27,11 @@
       </form>
     </div>
 
-    <div v-if="Object.keys(groupedSchedules).length > 0" class="schedule-container">
-      <h2>Bus Schedules</h2>
+    <div v-if="highlightedSchedules.length > 0" class="schedule-container">
+      <h2>Highlighted Bus Schedules</h2>
       <div class="bus-grid">
-        <!-- Loop through the grouped schedules and show only the highlighted ones -->
-        <div v-for="(schedule, busId) in groupedSchedules" :key="busId" class="bus-container">
+        <!-- Loop through only the highlighted schedules -->
+        <div v-for="(schedule, busId) in highlightedSchedules" :key="busId" class="bus-container">
           <h3>Bus ID: {{ busId }}</h3>
           <table>
             <thead>
@@ -63,6 +63,7 @@
 </template>
 
 
+
 <script>
 import Papa from "papaparse";
 
@@ -75,114 +76,104 @@ export default {
       selectedDestination: "",
       sourceOptions: [],
       destinationOptions: [],
-      selectedSchedule: [],
-      groupedSchedules: {}, // New object to hold the grouped schedules by bus_id
+      highlightedSchedules: [], // To store only the highlighted schedules
     };
   },
   methods: {
-  fetchRoutes() {
-    const csvUrl = "/output.csv";
-    console.log("Fetching CSV data from:", csvUrl);
+    fetchRoutes() {
+      const csvUrl = "/final.csv";
+      console.log("Fetching CSV data from:", csvUrl);
 
-    Papa.parse(csvUrl, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log("Parsing complete:", results.data);
-        const data = results.data.filter((row) => row.route_id);
+      Papa.parse(csvUrl, {
+        download: true,
+        header: true,
+        complete: (results) => {
+          console.log("Parsing complete:", results.data);
+          const data = results.data.filter((row) => row.route_id);
 
-        // Group data by route_id
-        const groupedRoutes = data.reduce((acc, row) => {
-          if (!acc[row.route_id]) {
-            acc[row.route_id] = { route_id: row.route_id, stops: [] };
-          }
+          // Group data by route_id
+          const groupedRoutes = data.reduce((acc, row) => {
+            if (!acc[row.route_id]) {
+              acc[row.route_id] = { route_id: row.route_id, stops: [] };
+            }
 
-          if (!acc[row.route_id].stops.some((stop) => stop.stop_name === row.stop_name)) {
-            acc[row.route_id].stops.push({
-              stop_sequence: parseInt(row.stop_sequence),
-              stop_name: row.stop_name,
-              arrival_time: row.arrival_time,
-              bus_id: row.bus_name,
-            });
-          }
+            if (!acc[row.route_id].stops.some((stop) => stop.stop_name === row.stop_name)) {
+              acc[row.route_id].stops.push({
+                stop_sequence: parseInt(row.stop_sequence),
+                stop_name: row.stop_name,
+                arrival_time: row.arrival_time,
+                bus_id: row.bus_name,
+              });
+            }
 
-          return acc;
-        }, {});
+            return acc;
+          }, {});
 
-        // Map the grouped routes
-        this.routes = Object.values(groupedRoutes).map((route) => {
-          const sortedStops = route.stops.sort((a, b) => a.stop_sequence - b.stop_sequence);
-          return {
-            route_id: route.route_id,
-            schedule: sortedStops,
-            stops: sortedStops.map((stop) => stop.stop_name),
-          };
-        });
+          // Map the grouped routes
+          this.routes = Object.values(groupedRoutes).map((route) => {
+            const sortedStops = route.stops.sort((a, b) => a.stop_sequence - b.stop_sequence);
+            return {
+              route_id: route.route_id,
+              schedule: sortedStops,
+              stops: sortedStops.map((stop) => stop.stop_name),
+            };
+          });
 
-        // Populate source and destination options
-        const allStops = data.map((row) => row.stop_name);
-        this.sourceOptions = [...new Set(allStops)];
-        this.destinationOptions = [...new Set(allStops)];
-      },
-    });
-  },
+          // Populate source and destination options
+          const allStops = data.map((row) => row.stop_name);
+          this.sourceOptions = [...new Set(allStops)];
+          this.destinationOptions = [...new Set(allStops)];
+        },
+      });
+    },
 
-  handleSearch() {
-    if (!this.selectedSource || !this.selectedDestination) {
-      this.selectedSchedule = [];
-      return;
-    }
+    handleSearch() {
+      if (!this.selectedSource || !this.selectedDestination) {
+        this.highlightedSchedules = [];
+        return;
+      }
 
-    // Filter routes that include both source and destination
-    const matchingRoutes = this.routes.filter((route) => {
-      const sourceIndex = route.stops.indexOf(this.selectedSource);
-      const destinationIndex = route.stops.indexOf(this.selectedDestination);
-      return sourceIndex !== -1 && destinationIndex !== -1 && sourceIndex < destinationIndex;
-    });
+      // Filter routes that include both source and destination
+      const matchingRoutes = this.routes.filter((route) => {
+        const sourceIndex = route.stops.indexOf(this.selectedSource);
+        const destinationIndex = route.stops.indexOf(this.selectedDestination);
+        return sourceIndex !== -1 && destinationIndex !== -1 && sourceIndex < destinationIndex;
+      });
 
-    // Group stops by bus_id and filter for highlighted schedules
-    const groupedSchedules = matchingRoutes.flatMap((route) => {
-      return route.schedule
-        .filter((stop, index, arr) => {
-          const sourceIndex = arr.findIndex((s) => s.stop_name === this.selectedSource);
-          const destinationIndex = arr.findIndex((s) => s.stop_name === this.selectedDestination);
-          return (
-            index >= sourceIndex &&
-            index <= destinationIndex &&
-            sourceIndex < destinationIndex
-          );
-        })
-        .reduce((acc, stop) => {
+      // Filter only the highlighted stops (source and destination)
+      this.highlightedSchedules = matchingRoutes.flatMap((route) => {
+        return route.schedule.filter((stop) => 
+          stop.stop_name === this.selectedSource || stop.stop_name === this.selectedDestination
+        ).reduce((acc, stop) => {
           if (!acc[stop.bus_id]) {
             acc[stop.bus_id] = [];
           }
           acc[stop.bus_id].push(stop);
           return acc;
         }, {});
-    });
+      });
 
-    // Flatten the grouped schedules by bus_id
-    this.groupedSchedules = groupedSchedules.reduce((acc, curr) => {
-      for (const busId in curr) {
-        if (!acc[busId]) {
-          acc[busId] = [];
+      // Flatten the grouped schedules by bus_id
+      this.highlightedSchedules = this.highlightedSchedules.reduce((acc, curr) => {
+        for (const busId in curr) {
+          if (!acc[busId]) {
+            acc[busId] = [];
+          }
+          acc[busId] = acc[busId].concat(curr[busId]);
         }
-        acc[busId] = acc[busId].concat(curr[busId]);
-      }
-      return acc;
-    }, {});
+        return acc;
+      }, {});
 
-    console.log("Grouped bus schedules:", this.groupedSchedules);
+      console.log("Highlighted bus schedules:", this.highlightedSchedules);
+    },
   },
-},
-
-
 
   mounted() {
     this.fetchRoutes();
   },
 };
 </script>
+
 
 <style scoped>
 .route-form {
