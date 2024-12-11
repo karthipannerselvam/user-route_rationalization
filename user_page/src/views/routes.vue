@@ -64,7 +64,7 @@ export default {
       try {
         // Fetch stops from the API
         const response = await axios.get(
-          `http://127.0.0.1:5000/api/stops`,
+          `https://gtfs-7908.onrender.com/api/stops`,
           { params: { route_id: this.routeId } }
         );
         this.stops = response.data;
