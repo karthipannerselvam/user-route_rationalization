@@ -163,6 +163,7 @@ export default {
     text-align: left; /* Align title with logo */
     white-space: nowrap; /* Prevent wrapping */
     margin: 0; /* Remove extra margin */
+    width:10px;
   }
 
   .topbar-title span {
