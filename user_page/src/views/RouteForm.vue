@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class = "main">
     <div class="route-form">
+      <topbar />
       <h1>Select Your Route</h1>
       <form @submit.prevent="handleSearch">
         <div>
@@ -65,10 +66,16 @@
 
 <script>
 import Papa from "papaparse";
+import topbar from "../components/topbar.vue";
 
 
 export default {
   name: "RouteForm",
+  components: {
+     
+     topbar
+    
+   },
   data() {
     return {
       routes: [],
@@ -82,7 +89,7 @@ export default {
   },
   methods: {
   fetchRoutes() {
-    const csvUrl = "/final1.csv";
+    const csvUrl = "/final.csv";
     console.log("Fetching CSV data from:", csvUrl);
 
     Papa.parse(csvUrl, {
@@ -186,6 +193,7 @@ export default {
 </script>
 
 <style scoped>
+
 .route-form {
   max-width: 600px;
   margin: 2rem auto;
@@ -194,6 +202,7 @@ export default {
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
 }
 
 .route-form h1 {
@@ -259,8 +268,12 @@ export default {
 .bus-grid {
   display: flex;
   overflow-x: auto;
-  
+  overflow-y: hidden; /* Prevent vertical scrolling */
+  -ms-overflow-style: none; /* Internet Explorer/Edge scrollbar style */
   gap: 1rem;
+}
+::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
 }
 
 .bus-container {
