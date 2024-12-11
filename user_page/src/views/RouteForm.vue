@@ -195,7 +195,7 @@ export default {
 /* General adjustments for better responsiveness */
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  
 }
 
 .route-form {
