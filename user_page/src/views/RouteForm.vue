@@ -258,8 +258,14 @@ export default {
   max-width: 100%;
   max-height: 80vh; /* Restrict height for better alignment */
   overflow-y: auto; /* Enable scrolling for long content */
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  -ms-overflow-style: none;
 }
-
+::-webkit-scrollbar {
+  display: none; /* Hide scrollbar */
+}
 .bus-grid {
   display: flex;
   flex-wrap: wrap;
