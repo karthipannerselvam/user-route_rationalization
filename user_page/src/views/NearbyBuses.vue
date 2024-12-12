@@ -1,7 +1,10 @@
 <template>
   <div>
-
+   
     <h2>Nearby Bus Stops and Stations</h2>
+    <div class="back-arrow" @click="$router.push('/')">
+        <i class="fa fa-arrow-left"></i>
+         </div>
     <div id="map"></div>
 
     <div v-if="busStops.length">
@@ -215,6 +218,26 @@ html, body {
 height: 100%;
 margin: 0;
 padding: 0;
+}
+.back-arrow {
+  font-size: 24px; /* Adjusts the size of the icon */
+  cursor: pointer; /* Changes the cursor to a pointer to indicate interactivity */
+  color: #2d2d2d; /* Default color for the back arrow */
+  position: absolute; /* Ensures it stays in a fixed spot relative to the container */
+  top: 20px; /* Distance from the top */
+  left: 20px; /* Distance from the left */
+  z-index: 100; /* Ensures it stays above other elements */
+  background-color: #ffffff; /* Adds a background to make it stand out */
+  border-radius: 50%; /* Makes it circular */
+  padding: 10px; /* Adds spacing around the icon */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  transition: color 0.3s, background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effects */
+}
+
+.back-arrow:hover {
+  color: #ffffff; /* Changes the icon color on hover */
+  background-color: #8298C4; /* Changes the background color on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Increases the shadow for a pop effect */
 }
 
 #map {

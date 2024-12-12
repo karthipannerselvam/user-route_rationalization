@@ -33,6 +33,7 @@ export default {
         { text: "HOME", route: "/" },
         { text: "ABOUT US", route: "/aboutus" },
         { text: "SEARCH", route: "/routes" },
+        { text: "NEARBY BUS STOP", route: "/near" },
         { text: "CONTACT US", route: "/contact-us" },
       ],
     };
