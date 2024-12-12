@@ -192,20 +192,16 @@ export default {
 };
 </script>
 <style scoped>
-/* General adjustments for better responsiveness */
-body {
-  margin: 0;
-  
-}
-
 .route-form {
   max-width: 90%; /* Reduce width for mobile */
-  margin: 1rem auto;
+  margin: 2rem auto; /* Centered with spacing around it */
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative; /* Changed from fixed to relative */
+  top: auto; /* Reset any previously applied top property */
 }
 
 .route-form h1 {
@@ -217,29 +213,29 @@ body {
 
 .route-form select {
   width: 100%;
-  padding: 0.7rem; /* Slightly smaller padding */
+  padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 0.9rem; /* Adjust font size */
+  font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
 .route-form button {
   display: block;
   width: 100%;
-  padding: 0.8rem; /* Adjust padding for mobile */
+  padding: 0.8rem;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
 
 .schedule-container {
   color: #333;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -271,7 +267,7 @@ body {
 
 .schedule-container th,
 .schedule-container td {
-  padding: 0.6rem; /* Adjust padding for smaller screens */
+  padding: 0.6rem;
   border: 1px solid #ddd;
   text-align: left;
 }
@@ -304,6 +300,7 @@ body {
 /* Media Query for very small devices */
 @media (max-width: 480px) {
   .route-form {
+    margin-top: 60px;
     padding: 1rem;
   }
 
@@ -318,9 +315,13 @@ body {
   .bus-container {
     flex: 1 1 100%;
   }
+  .schedule-container{
+        padding: 0;
+  }
 
   .schedule-container table {
     font-size: 0.8rem;
   }
 }
+
 </style>
