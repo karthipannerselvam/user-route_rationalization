@@ -239,7 +239,7 @@ export default {
   display: block;
   width: 100%;
   padding: 0.8rem;
-  background-color: #007bff;
+  background-color: #9edfe3;
   color: #fff;
   border: none;
   border-radius: 6px;

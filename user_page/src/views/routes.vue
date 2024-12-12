@@ -200,13 +200,13 @@ input[type="number"] {
 }
 
 input[type="number"]:focus {
-  border-color: #007BFF;
+  border-color: #9edfe3;
   box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
 }
 
 button {
-  background-color: #007BFF;
-  color: #fff;
+  background-color: #9edfe3;
+  color: #222;
   padding: 10px 20px;
   border: none;
   border-radius: 8px;
