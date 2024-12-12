@@ -192,15 +192,26 @@ export default {
 };
 </script>
 <style scoped>
-/* General adjustments for better responsiveness */
-body {
-  margin: 0;
-  
+
+.main {
+ 
+  background-size: cover; /* Ensures the image covers the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent repetition */
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* Allow internal scrolling if content overflows */
+  padding: 1rem; /* Add padding for better spacing */
 }
 
 .route-form {
-  max-width: 90%; /* Reduce width for mobile */
-  margin: 1rem auto;
+  margin-top:60px;
+  width: 90%;
+  max-width: 600px; /* Limit maximum width */
+  margin: 0 auto; /* Centered */
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 12px;
@@ -211,50 +222,53 @@ body {
 .route-form h1 {
   text-align: center;
   color: #333;
-  font-size: 1.5rem; /* Reduce font size for smaller screens */
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
 .route-form select {
   width: 100%;
-  padding: 0.7rem; /* Slightly smaller padding */
+  padding: 0.7rem;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 0.9rem; /* Adjust font size */
+  font-size: 0.9rem;
   margin-bottom: 1rem;
 }
 
 .route-form button {
   display: block;
   width: 100%;
-  padding: 0.8rem; /* Adjust padding for mobile */
+  padding: 0.8rem;
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 6px;
-  font-size: 1rem; /* Adjust font size */
+  font-size: 1rem;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
 
 .schedule-container {
   color: #333;
-  margin-top: 1.5rem;
+  margin-top: 2rem;
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  max-width: 100%;
+  max-height: 80vh; /* Restrict height for better alignment */
+  overflow-y: auto; /* Enable scrolling for long content */
 }
 
 .bus-grid {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for better mobile layout */
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
 
 .bus-container {
-  flex: 1 1 calc(100% - 2rem); /* Make containers full-width on mobile */
+  flex: 1 1 calc(100% - 2rem);
   max-width: 100%;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -266,12 +280,12 @@ body {
 .schedule-container table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem; /* Reduce font size for better fit */
+  font-size: 0.9rem;
 }
 
 .schedule-container th,
 .schedule-container td {
-  padding: 0.6rem; /* Adjust padding for smaller screens */
+  padding: 0.6rem;
   border: 1px solid #ddd;
   text-align: left;
 }
@@ -288,22 +302,21 @@ body {
   background-color: #e9e9e9;
 }
 
-/* Highlight adjustments */
 .highlight-source {
-  background-color: #d1e7dd; /* Light green */
+  background-color: #d1e7dd;
   font-weight: bold;
   color: #0f5132;
 }
 
 .highlight-destination {
-  background-color: #f8d7da; /* Light red */
+  background-color: #f8d7da;
   font-weight: bold;
   color: #842029;
 }
 
-/* Media Query for very small devices */
 @media (max-width: 480px) {
   .route-form {
+    margin-top: 60px;
     padding: 1rem;
   }
 
@@ -323,4 +336,5 @@ body {
     font-size: 0.8rem;
   }
 }
+
 </style>
