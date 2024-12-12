@@ -60,15 +60,16 @@
   
   <style scoped>
   .about-us {
-    font-family: Arial, sans-serif;
+    /* font-family: Arial, sans-serif; */
     line-height: 1.6;
     color: #333;
     padding: 2rem;
-    max-width: 1200px;
+   
     margin: 0 auto;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width:100%;
   }
   
   .header {
