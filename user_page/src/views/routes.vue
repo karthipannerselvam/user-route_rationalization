@@ -22,14 +22,18 @@
       <div id="map" class="map-container"></div>
 
       <!-- Display All Stops Names -->
-      <div class="stops-list">
-        <h3>List of Stops:</h3>
-        <ul>
-          <li v-for="stop in stops" :key="stop.stop_id">
-            {{ stop.stop_name }} (ID: {{ stop.stop_id }})
-          </li>
-        </ul>
-      </div>
+      <div class="stops-line">
+  <div v-for="(stop, index) in stops" :key="stop.stop_id" class="stop-item">
+    <div class="line-connector">
+      <div class="dot"></div>
+    </div>
+    <div class="stop-info">
+      <span class="stop-name">{{ stop.stop_name }}</span>
+    </div>
+  </div>
+</div>
+
+
     </div>
   </div>
 </template>
@@ -137,7 +141,69 @@ export default {
 </script>
 
 <style>
-/* General Styling */
+.stops-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px auto;
+  padding: 0 15px;
+  max-width: 600px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stop-item {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 20px 0;
+  margin-left: 20px;
+}
+
+.line-connector {
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 0px; /* Very thin line */
+  background-color: #007BFF;
+  z-index: 1;
+  padding: 1px;
+}
+
+.dot {
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0px;
+  height: 2px;
+  background-color: #fff;
+  border: 3px solid #007BFF;
+  border-radius: 50%;
+  z-index: 2;
+  padding: 5px;
+}
+
+.stop-info {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stop-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stop-id {
+  font-size: 12px;
+  color: #555;
+}
+
 body {
   font-family: 'Arial', sans-serif;
   background-color: #f4f4f9;
