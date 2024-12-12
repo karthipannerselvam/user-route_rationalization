@@ -1,39 +1,39 @@
-<template>
+x<template>
   <div>
     <topbar />
-    <h1>Bus Stops Finder</h1>
+    <div class="container">
+      <h1>Bus Stops Finder</h1>
 
-    <!-- Input for Route ID -->
-    <div>
-      <label for="routeId">Enter Route ID:</label>
-      <input type="number" v-model="routeId" id="routeId" placeholder="Enter route ID" />
-      <button @click="fetchStops">Get Stops</button>
-    </div>
+      <!-- Input for Route ID -->
+      <div class="input-box">
+        <label for="routeId">Enter Route ID:</label>
+        <input type="number" v-model="routeId" id="routeId" placeholder="Enter route ID" />
+        <button @click="fetchStops">Get Stops</button>
+      </div>
 
-    <!-- Loading Indicator -->
-    <div v-if="loading">Loading...</div>
+      <!-- Loading Indicator -->
+      <div v-if="loading" class="loading">Loading...</div>
 
-    <!-- Error Message -->
-    <div v-if="error" class="error">{{ error }}</div>
+      <!-- Error Message -->
+      <div v-if="error" class="error">{{ error }}</div>
 
-    <!-- Display Map and Stops -->
-    <div v-if="stops.length">
-      <h2>Stops for Route ID: {{ routeId }}</h2>
-      <div id="map" class="map-container"></div>
+      <!-- Display Map and Stops -->
+      <div v-if="stops.length">
+        <h2>Stops for Route ID: {{ routeId }}</h2>
+        <div id="map" class="map-container"></div>
 
-      <!-- Display All Stops Names -->
-      <div class="stops-line">
-  <div v-for="(stop, index) in stops" :key="stop.stop_id" class="stop-item">
-    <div class="line-connector">
-      <div class="dot"></div>
-    </div>
-    <div class="stop-info">
-      <span class="stop-name">{{ stop.stop_name }}</span>
-    </div>
-  </div>
-</div>
-
-
+        <!-- Display All Stops Names -->
+        <div class="stops-line">
+          <div v-for="(stop, index) in stops" :key="stop.stop_id" class="stop-item">
+            <div class="line-connector">
+              <div class="dot"></div>
+            </div>
+            <div class="stop-info">
+              <span class="stop-name">{{ stop.stop_name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -46,10 +46,8 @@ import topbar from "../components/topbar.vue";
 
 export default {
   components: {
-     
-     topbar
-    
-   },
+    topbar
+  },
   data() {
     return {
       routeId: null, // Input for route ID
@@ -140,105 +138,48 @@ export default {
 };
 </script>
 
-<style>
-.stops-line {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  margin: 20px auto;
-  padding: 0 15px;
-  max-width: 600px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.stop-item {
-  display: flex;
-  align-items: center;
-  position: relative;
-  padding: 20px 0;
-  margin-left: 20px;
-}
-
-.line-connector {
-  position: absolute;
-  left: -20px;
-  top: 0;
-  bottom: 0;
-  width: 0px; /* Very thin line */
-  background-color: #007BFF;
-  z-index: 1;
-  padding: 1px;
-}
-
-.dot {
-  position: absolute;
-  left: -6px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 0px;
-  height: 2px;
-  background-color: #fff;
-  border: 3px solid #007BFF;
-  border-radius: 50%;
-  z-index: 2;
-  padding: 5px;
-}
-
-.stop-info {
-  padding-left: 20px;
-  display: flex;
-  flex-direction: column;
-}
-
-.stop-name {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
-}
-
-.stop-id {
-  font-size: 12px;
-  color: #555;
-}
-
+<style scoped>
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
   margin: 0;
   padding: 0;
   color: #333;
+  background-color: #E0F7FA; /* Light cyan background color */
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 70px;
+  border-radius: 5px;
+  background-color: #9edfe3; /* Light cyan background color */
 }
 
 h1 {
-  font-size: 2em; /* Adjust size as needed */
-  margin-top: 50px; /* Space below the heading */
-  margin-right: 50px;
+  font-size: 2.5em;
+  margin-top: 20px;
+  text-align: center;
+  color: black; /* Complementary green shade */
 }
 
 h2 {
-  font-size: 1.5em; /* Adjust size as needed */
-  margin-bottom: 15px; /* Space below the heading */
+  font-size: 1.8em;
+  margin-bottom: 15px;
+  text-align: center;
+  color: black;
 }
 
-h3 {
-  font-size: 1.2em; /* Adjust size as needed */
-  margin-bottom: 10px; /* Space below the heading */
-}
- h1,h2, h3 {
-  color: #333;
+.input-box {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 20px auto;
   text-align: center;
 }
 
-/* Container */
-div {
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-/* Input and Button Styles */
 label {
   font-weight: bold;
   display: block;
@@ -248,13 +189,13 @@ label {
 
 input[type="number"] {
   width: 100%;
-  max-width: 400px;
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 8px;
   font-size: 16px;
   transition: border-color 0.3s ease;
   outline: none;
+  max-width: 300px ;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
@@ -280,7 +221,6 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Loading Indicator */
 .loading {
   text-align: center;
   font-size: 18px;
@@ -288,7 +228,6 @@ button:hover {
   margin: 20px 0;
 }
 
-/* Error Message */
 .error {
   text-align: center;
   color: #d9534f;
@@ -300,73 +239,88 @@ button:hover {
   border-radius: 8px;
 }
 
-/* Map Container */
 .map-container {
-  width: 100%;
+  width: 90%;
   max-width: 1000px;
-  height: 500px;
+  height: 400px;
   margin: 20px auto;
-  border: none;
+  border:#ccc 3px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   overflow: hidden;
 }
 
-/* Stops List */
-.stops-list {
+.stops-line {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   margin: 20px auto;
-  padding: 15px;
+  padding: 0 15px;
+  max-width: 600px;
+  max-height: 400px; /* Set max height */
+  overflow-y: auto; /* Enable vertical scrolling */
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
 }
 
-.stops-list h3 {
-  text-align: center;
-  color: #007BFF;
-  margin-bottom: 10px;
-}
-
-.stops-list ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.stops-list li {
-  padding: 10px;
-  margin: 5px 0;
-  border-bottom: 1px solid #ddd;
+.stop-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  transition: background-color 0.3s ease;
+  position: relative;
+  padding: 20px 0;
+  margin-left: 20px;
 }
 
-.stops-list li:last-child {
-  border-bottom: none;
+.line-connector {
+  position: absolute;
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  width: 2px; /* Very thin line */
+  background-color: #007BFF;
+  z-index: 1;
 }
 
-.stops-list li:hover {
-  background-color: #f8f9fa;
-  cursor: pointer;
+.dot {
+  position: absolute;
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: #fff;
+  border: 3px solid #007BFF;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.stop-info {
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stop-name {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stop-id {
+  font-size: 12px;
+  color: #555;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  input[type="number"], button {
-    width: 100%;
-  }
-
   .map-container {
     height: 400px;
   }
 
-  .stops-list {
+  .stops-line {
     max-width: 100%;
   }
 }
-
 </style>
