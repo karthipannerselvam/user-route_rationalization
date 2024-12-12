@@ -146,7 +146,22 @@ body {
   color: #333;
 }
 
-h1, h2, h3 {
+h1 {
+  font-size: 2em; /* Adjust size as needed */
+  margin-top: 50px; /* Space below the heading */
+  margin-right: 50px;
+}
+
+h2 {
+  font-size: 1.5em; /* Adjust size as needed */
+  margin-bottom: 15px; /* Space below the heading */
+}
+
+h3 {
+  font-size: 1.2em; /* Adjust size as needed */
+  margin-bottom: 10px; /* Space below the heading */
+}
+ h1,h2, h3 {
   color: #333;
   text-align: center;
 }

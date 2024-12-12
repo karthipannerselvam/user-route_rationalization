@@ -30,12 +30,13 @@ export default {
     return {
       isMenuOpen: false,
       menuItems: [
+        {text: "HOME",route:"/"},
         { text: "ABOUT US", route: "/aboutus" },
-        { text: "FARE LIST", route: "/fare-list" },
-        { text: "CONCESSION FARES", route: "/concession-fares" },
+        // { text: "FARE LIST", route: "/fare-list" },
+        // { text: "CONCESSION FARES", route: "/concession-fares" },
         { text: "SEARCH", route: "/routes" },
         { text: "CONTACT US", route: "/contact-us" },
-        { text: "OTHERS", route: "/others" },
+        // { text: "OTHERS", route: "/others" },
       ],
     };
   },

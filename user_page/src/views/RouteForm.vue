@@ -192,22 +192,37 @@ export default {
 };
 </script>
 <style scoped>
+
+.main {
+ 
+  background-size: cover; /* Ensures the image covers the entire viewport */
+  background-position: center; /* Center the image */
+  background-repeat: no-repeat; /* Prevent repetition */
+ 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: auto; /* Allow internal scrolling if content overflows */
+  padding: 1rem; /* Add padding for better spacing */
+}
+
 .route-form {
-  max-width: 90%; /* Reduce width for mobile */
-  margin: 2rem auto; /* Centered with spacing around it */
+  margin-top:60px;
+  width: 90%;
+  max-width: 600px; /* Limit maximum width */
+  margin: 0 auto; /* Centered */
   padding: 1rem;
   border: 1px solid #ddd;
   border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative; /* Changed from fixed to relative */
-  top: auto; /* Reset any previously applied top property */
 }
 
 .route-form h1 {
   text-align: center;
   color: #333;
-  font-size: 1.5rem; /* Reduce font size for smaller screens */
+  font-size: 1.5rem;
   margin-bottom: 1rem;
 }
 
@@ -240,17 +255,20 @@ export default {
   border: 1px solid #ddd;
   border-radius: 8px;
   background-color: #f9f9f9;
+  max-width: 100%;
+  max-height: 80vh; /* Restrict height for better alignment */
+  overflow-y: auto; /* Enable scrolling for long content */
 }
 
 .bus-grid {
   display: flex;
-  flex-wrap: wrap; /* Allow wrapping for better mobile layout */
+  flex-wrap: wrap;
   gap: 1rem;
   justify-content: center;
 }
 
 .bus-container {
-  flex: 1 1 calc(100% - 2rem); /* Make containers full-width on mobile */
+  flex: 1 1 calc(100% - 2rem);
   max-width: 100%;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -262,7 +280,7 @@ export default {
 .schedule-container table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem; /* Reduce font size for better fit */
+  font-size: 0.9rem;
 }
 
 .schedule-container th,
@@ -284,20 +302,18 @@ export default {
   background-color: #e9e9e9;
 }
 
-/* Highlight adjustments */
 .highlight-source {
-  background-color: #d1e7dd; /* Light green */
+  background-color: #d1e7dd;
   font-weight: bold;
   color: #0f5132;
 }
 
 .highlight-destination {
-  background-color: #f8d7da; /* Light red */
+  background-color: #f8d7da;
   font-weight: bold;
   color: #842029;
 }
 
-/* Media Query for very small devices */
 @media (max-width: 480px) {
   .route-form {
     margin-top: 60px;
@@ -314,9 +330,6 @@ export default {
 
   .bus-container {
     flex: 1 1 100%;
-  }
-  .schedule-container{
-        padding: 0;
   }
 
   .schedule-container table {
